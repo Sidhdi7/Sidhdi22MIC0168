@@ -11,17 +11,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Set up Java
-      uses: actions/setup-java@v4
-      with:
-        java-version: '17'
-        distribution: 'temurin'
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
 
-    - name: Compile Java code
-      run: javac Main.java
+      - name: Compile Java code
+        run: javac *.java
 
-    - name: Run Java program
-      run: java Main
+      - name: Run Java program
+        run: java Main
+
+  hello-job:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Say Hello
+        run: echo "👋 Hello, Sidhdi! GitHub Actions is working!"
