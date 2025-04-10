@@ -1,6 +1,56 @@
+name: Java CI (No Gradle)
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  issues:
+    types: [opened]
+  pull_request_target:
+    types: [opened]
+
+jobs:
+  build-run:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Compile Java code
+        run: javac *.java
+
+      - name: Run Java program
+        run: java Main
+
+  hello-job:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Say Hello
+        run: echo "👋 Hello, Sidhdi! GitHub Actions is working!"
+
+  greet-contributor:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+      - name: Greet new contributors
+        uses: actions/first-interaction@v1
+        with:
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          issue-message: "🎉 Thanks for opening your first issue! We're glad to have you here. Welcome aboard! 😊"
+          pr-message: "🚀 Thanks for your first pull request! Your contribution means a lot. Feel free to explore the code and say hi! 👋"
+
   docker-push:
     runs-on: ubuntu-latest
-    needs: build-run  # Waits for the Java build to succeed
+    needs: build-run  # Waits for Java build to complete
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
